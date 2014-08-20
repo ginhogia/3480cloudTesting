@@ -83,6 +83,9 @@ class Club
     $name_mapping[33]= "台北東海團";
     $name_mapping[34]= "台北群英團";
     $name_mapping[35]= "金門團";
+    $name_mapping[36]= "台北錫口團";
+    $name_mapping[37]= "台北新世紀團";
+    $name_mapping[38]= "台北圓滿團";
     return idx($name_mapping, $id, "");
   }
 

@@ -16,7 +16,7 @@ if ($year)
 	$racyear = $year;
   
   
-for ($i = 1; $i <= 5; ++$i)
+for ($i = 1; $i <= 11; ++$i)
 {
   $file = File::getFileById($i, $session->getClub()->getId(), $racyear);
   if ($file)
@@ -87,7 +87,7 @@ var FileList = function(element)
 
   me.refresh = function()
   {
-    for (var i = 1; i <= 5; ++i)
+    for (var i = 1; i <= 11; ++i)
     {
       var $tr = me.element.list.find("tr[data-src=" + i + "]");
       var $date = $tr.find("[data-ref='date']");
@@ -246,6 +246,54 @@ $(document).ready(function()
                 <td data-ref="user"></td>
                 <td><a href="#" data-link="download"><i class="icon-download"></i> 下載</a></td>
                 <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":5,"racyear":"<?php echo $racyear?>"}'></a></td>
+                <td><a href="#" data-link="remove" data-visible="owner"><i class="icon-remove"></i> 刪除檔案</a></td>
+              </tr>
+              <tr data-src="6">
+                <td data-ref="name">團長獎評</td>
+                <td data-ref="date"></td>
+                <td data-ref="user"></td>
+                <td><a href="#" data-link="download"><i class="icon-download"></i> 下載</a></td>
+                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":6,"racyear":"<?php echo $racyear?>"}'></a></td>
+                <td><a href="#" data-link="remove" data-visible="owner"><i class="icon-remove"></i> 刪除檔案</a></td>
+              </tr>
+              <tr data-src="7">
+                <td data-ref="name">團務服務獎評</td>
+                <td data-ref="date"></td>
+                <td data-ref="user"></td>
+                <td><a href="#" data-link="download"><i class="icon-download"></i> 下載</a></td>
+                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":7,"racyear":"<?php echo $racyear?>"}'></a></td>
+                <td><a href="#" data-link="remove" data-visible="owner"><i class="icon-remove"></i> 刪除檔案</a></td>
+              </tr>
+              <tr data-src="8">
+                <td data-ref="name">國際服務獎評</td>
+                <td data-ref="date"></td>
+                <td data-ref="user"></td>
+                <td><a href="#" data-link="download"><i class="icon-download"></i> 下載</a></td>
+                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":8,"racyear":"<?php echo $racyear?>"}'></a></td>
+                <td><a href="#" data-link="remove" data-visible="owner"><i class="icon-remove"></i> 刪除檔案</a></td>
+              </tr>
+              <tr data-src="9">
+                <td data-ref="name">職業服務獎評</td>
+                <td data-ref="date"></td>
+                <td data-ref="user"></td>
+                <td><a href="#" data-link="download"><i class="icon-download"></i> 下載</a></td>
+                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":9,"racyear":"<?php echo $racyear?>"}'></a></td>
+                <td><a href="#" data-link="remove" data-visible="owner"><i class="icon-remove"></i> 刪除檔案</a></td>
+              </tr>
+              <tr data-src="10">
+                <td data-ref="name">社區服務獎評</td>
+                <td data-ref="date"></td>
+                <td data-ref="user"></td>
+                <td><a href="#" data-link="download"><i class="icon-download"></i> 下載</a></td>
+                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":10}'></a></td>
+                <td><a href="#" data-link="remove" data-visible="owner"><i class="icon-remove"></i> 刪除檔案</a></td>
+              </tr>
+              <tr data-src="11">
+                <td data-ref="name">公關服務獎評</td>
+                <td data-ref="date"></td>
+                <td data-ref="user"></td>
+                <td><a href="#" data-link="download"><i class="icon-download"></i> 下載</a></td>
+                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":11}'></a></td>
                 <td><a href="#" data-link="remove" data-visible="owner"><i class="icon-remove"></i> 刪除檔案</a></td>
               </tr>
             </tbody>

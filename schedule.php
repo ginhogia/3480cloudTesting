@@ -423,7 +423,7 @@ $(document).ready(function()
                 <div class="control-group">
                   <label class="control-label" for="meeting_reg_time">註冊時間</label>
                   <div class="controls">
-                    <input type="time" id="meeting_reg_time" data-ref="reg_time" />
+                    <input type="text" id="meeting_reg_time" data-ref="reg_time" />
                   </div>
                 </div>
               </form>

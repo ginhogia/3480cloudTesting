@@ -15,6 +15,10 @@ class User
 	private $birth_year;
 	private $birth_month;
 	private $note;
+	private $gender;
+	private $reg_date; //入團日期
+	private $exit_date; //退團/ob日期
+	private $exit_reason; //退團原因 1.OB 2.退團
 
 	function __construct($data)
 	{
@@ -27,6 +31,10 @@ class User
 		$this->birth_year = intval($data["birth_year"]);
 		$this->birth_month = intval($data["birth_month"]);
 		$this->note = $data["note"];
+		$this->gender = $data["gender"];
+		$this->reg_date = $data["reg_date"];
+		$this->exit_date = $data["exit_date"];
+		$this->exit_reason = $data["exit_reason"];
 	}
 
 	function isValid()
@@ -39,6 +47,14 @@ class User
 		if (!$this->isValid() && $id >= 100)
 			return false;
 		return true;
+	}
+	
+	function isAdmin()
+	{
+		if ($this->fbid == "846779188" || $this->fbid == "631647110" || $this->fbid == "685119108166014")
+			return true;
+		else 
+			return false;
 	}
 
 	function hasFBId()
@@ -108,6 +124,10 @@ class User
 		$data["birth_year"] = $this->birth_year;
 		$data["birth_month"] = $this->birth_month;
 		$data["note"] = $this->note;
+		$data["gender"] = $this->gender;
+		$data["reg_date"] = $this->reg_date;
+		$data["exit_date"] = $this->exit_date;
+		$data["exit_reason"] = $this->exit_reason;
 		return $data;
 	}
 
@@ -137,8 +157,14 @@ class User
 		$this->birth_year = $data["birth_year"];
 		$this->birth_month = $data["birth_month"];
 		$this->note = $data["note"];
+		$this->gender = $data["gender"];
+		$this->reg_date = $data["reg_date"];
+		$this->exit_date = $data["exit_date"];
+		$this->exit_reason = $data["exit_reason"];
+		
 		$db = new DB();
-		$sql = "update `user` set `fbid`='{$this->fbid}', `title`='{$this->title}', `club_id`='{$this->club_id}', `name`='{$this->name}', `background`={$this->background}, `birth_year`={$this->birth_year}, `birth_month`={$this->birth_month}, `note`='{$this->note}' where `id`={$id};";
+		$sql = "update `user` set `fbid`='{$this->fbid}', `title`='{$this->title}', `club_id`='{$this->club_id}', `name`='{$this->name}', `background`={$this->background}, `birth_year`={$this->birth_year}, `birth_month`={$this->birth_month}, `note`='{$this->note}'
+		, `gender`={$this->gender},`reg_date`={$this->reg_date} where `id`={$id};";
 		//echo $sql;
 		$db->query($sql);
 		return true;

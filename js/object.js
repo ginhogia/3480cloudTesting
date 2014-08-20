@@ -177,7 +177,7 @@ function Meeting(data)
     me.location = data.location;
     me.note = data.note;
     me.racyear = data.racyear;
-    me.reg_date= data.reg_date;
+    me.reg_time= data.reg_time;
   }
   else
   {
@@ -262,6 +262,11 @@ function Event(data)
     me.location = data.location;
     me.partner = data.partner;
     me.note = data.note;
+    me.racyear = data.racyear;
+    me.eventType = data.eventType;
+    me.attendee = data.attendee;
+    me.absent = data.absent;
+    me.regforpersonal = data.regforpersonal;
   }
   else
   {
@@ -276,6 +281,12 @@ function Event(data)
     me.location = "";
     me.partner = "";
     me.note = "";
+    me.racyear= "";
+    me.eventType="0";
+    
+    me.attendee = new Array();
+    me.absent = new Array();
+    me.regforpersonal = new Array();
   }
 
   me.getData = function()
@@ -287,19 +298,42 @@ function Event(data)
     data.location = me.location;
     data.partner = me.partner;
     data.note = me.note;
+    data.racyear=me.racyear;
+    data.eventType = me.eventType;
+    data.attendee = me.attendee.slice(0);
+    data.absent = me.absent.slice(0);
+    data.regforpersonal = me.regforpersonal.slice(0);
     return data;
+  };
+  
+  me.getTypeString = function()
+  {
+    switch (me.eventType)
+    {
+      case "0": return "例會";
+      case "1": return "活動";
+      default: return "";
+    }
+  };  
+  
+  me.getAttendanceRate = function()
+  { 
+    if(me.attendee.length + me.absent.length + me.regforpersonal.length == 0)
+      return "-";
+    else
+      return parseInt(me.attendee.length * 100 / (me.attendee.length + me.absent.length + me.regforpersonal.length)) + "%";
   };
 
   me.remove = function(done)
   {
-    $.post("/api/removeEvent.php", {"id":me.id}, done, "json");
+    $.post("./api/removeEvent.php", {"id":me.id}, done, "json");
   };
 
   me.save = function(done)
   {
     var data = me.getData();
     console.log(data);
-    $.post("/api/saveEvent.php", data, done, "json");
+    $.post("./api/saveEvent.php", data, done, "json");
   };
 }
 
@@ -315,6 +349,7 @@ function EventResource(data)
     me.fbid = data.fbid;
     me.last_update = data.last_update;
     me.link = data.link;
+    me.racyear = data.racyear;
   }
   else
   {
@@ -325,6 +360,7 @@ function EventResource(data)
     me.fbid = "";
     me.last_update = 0;
     me.link = "";
+    me.racyear="";
   }
 
   me.getData = function()
@@ -335,6 +371,7 @@ function EventResource(data)
     data.fbid = data.fbid;
     data.last_update = me.last_update;
     data.link = me.link;
+    data.racyear = me.racyear;
     return data;
   };
 
@@ -352,7 +389,7 @@ function EventResource(data)
 
   me.remove = function(done)
   {
-    $.post("/api/removeEventResource.php", {"id":me.id}, done, "json");
+    $.post("./api/removeEventResource.php", {"id":me.id}, done, "json");
     //done({code:0});
   };
 

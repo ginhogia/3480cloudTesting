@@ -1,7 +1,13 @@
 <?
-require_once($_SERVER["DOCUMENT_ROOT"] . "/mod/api.php");
-require_once($_SERVER["DOCUMENT_ROOT"] . "/mod/page-id.php");
-require_once($_SERVER["DOCUMENT_ROOT"] . "/mod/event.php");
+// require_once($_SERVER["DOCUMENT_ROOT"] . "/mod/api.php");
+// require_once($_SERVER["DOCUMENT_ROOT"] . "/mod/page-id.php");
+// require_once($_SERVER["DOCUMENT_ROOT"] . "/mod/event.php");
+
+$filePath = dirname(__FILE__);
+require_once($filePath . "/../mod/api.php");
+require_once($filePath . "/../mod/page-id.php");
+require_once($filePath . "/../mod/event.php");
+
 $api = new Api($_POST);
 $api->checkParameter("id");
 

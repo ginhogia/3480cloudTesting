@@ -2,12 +2,14 @@
 require_once("mod/session.php");
 require_once("mod/page-builder.php");
 require_once("mod/event.php");
+require_once("mod/racyear.php");
 
 $session = new Session();
 $session->setPageId(PAGE_ID_TIMELINE);
 $session->checkPermission();
 $event = Event::getEvent(intval($_GET["id"]));
 $resources = EventResource::getResourcesByEvent($_GET["id"]);
+$racyear = Racyear::GetThisYear();
 $data = array();
 $data["event"] = $event? $event->getData(): null;
 $data["resources"] = array();
@@ -85,7 +87,9 @@ var EventEditor = function(element)
 
   me.refresh = function()
   {
+	me.element.basic.find("[data-ref='racyear']").val(me.data.event.racyear);
     me.element.basic.find("[data-ref='date']").val(me.data.event.date);
+    me.element.basic.find("input[name='eventtype'][value='" + me.data.event.eventType + "']").attr("checked", true);
     me.element.basic.find("[data-ref='topic']").val(me.data.event.topic);
     me.element.basic.find("[data-ref='location']").val(me.data.event.location);
     me.element.basic.find("[data-ref='partner']").val(me.data.event.partner);
@@ -106,7 +110,7 @@ var EventEditor = function(element)
       $resource.removeClass("template");
       $resource.attr("data-src", resource.id);
       $resource.find("[data-ref='type']").text(resource.getTypeString());
-      $resource.find("[data-ref='topic'] > a").text(resource.topic).attr("href", "/api/getEventResource.php?id=" + resource.id);
+      $resource.find("[data-ref='topic'] > a").text(resource.topic).attr("href", "./api/getEventResource.php?id=" + resource.id);
       //$resource.find("[data-link='edit']").attr("href", "event.php?id=" + event.id);
       var user = _r.session.club.getUserByFBId(resource.fbid);
       if (user)
@@ -182,7 +186,7 @@ var EventEditor = function(element)
           alert("啊，壞掉了！\n\n錯誤碼：" + result.code);
           return;
         }
-        location.href = "timeline.php";
+        location.href = "eventListNew.php";
       });
     }
   });
@@ -202,7 +206,9 @@ var EventEditor = function(element)
       return;
     }
 
+    me.data.event.racyear = me.element.basic.find("[data-ref='racyear']").val();
     me.data.event.date = me.element.basic.find("[data-ref='date']").val();
+    me.data.event.eventType = me.element.basic.find("input[name='eventtype']:checked").val();
     me.data.event.topic = me.element.basic.find("[data-ref='topic']").val();
     me.data.event.location = me.element.basic.find("[data-ref='location']").val();
     me.data.event.partner = me.element.basic.find("[data-ref='partner']").val();
@@ -281,7 +287,7 @@ var EventEditor = function(element)
     }
 
     me.element.editor_form.ajaxSubmit({
-    url: "/api/saveEventResource.php",
+    url: "./api/saveEventResource.php",
     type: "POST",
     error: function(e)
     {
@@ -316,10 +322,20 @@ var EventEditor = function(element)
 
 };
 
+var ddlYear= function(element){
+	var me = this;
+	me.ddl = element;
+	me.setData = function(){
+		me.ddl.val('<?php echo $racyear ?>');
+	};
+	
+};
+
 $(document).ready(function()
 {
 	var event_editor = new EventEditor($("#page_content"));
 	event_editor.setData(_r.data);
+	
 });
 </script>
         <!-- begin content -->
@@ -327,13 +343,24 @@ $(document).ready(function()
           <h1>例會/活動回顧</h1>
           <div id="basic">
             <input type="text" class="input-xxlarge" data-ref="topic" placeholder="名稱" /><br />
+            年度
+            <select id="year" data-ref="racyear">
+          	<option value="201314">2013-14</option>
+          	<option value="201415">2014-15</option>
+          	</select> <br />
+          	<div class="controls">
+                    <label class="radio inline"><input type="radio" name="eventtype" data-ref="eventtype" value="0" />例會</label>
+                    <label class="radio inline"><input type="radio" name="eventtype" data-ref="eventtype" value="1" />活動</label>
+                    
+                  </div>
+          	
             <input type="text" data-ref="date" data-date-format="yyyy/mm/dd" placeholder="日期" /><br />
             <h4>相關資訊</h4>
             <input type="text" class="input-xxlarge" data-ref="location" placeholder="地點" /><br />
             <input type="text" class="input-xxlarge" data-ref="partner" placeholder="合作單位/主講人" /><br />
             <textarea data-ref="note" rows="4" class="input-xxlarge" placeholder="其他資訊"></textarea><br />
 
-            <a class="btn btn-link" href="timeline.php" data-link="cancel">&laquo; 回到例會/活動列表</a>
+            <a class="btn btn-link" href="eventListNew.php" data-link="cancel">&laquo; 回到例會/活動列表</a>
             <p class="pull-right" data-visible="owner">
               <a class="btn btn-danger" href="#" data-link="remove"><i class="icon-trash icon-white"></i> 刪除本次回顧</a>
               <a class="btn btn-primary" href="#" data-link="save">儲存資訊</a>

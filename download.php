@@ -25,7 +25,8 @@ $builder = new PageBuilder($session);
         <div class="span9" id="page_content">
           <h1>文件下載</h1>
           <ul>
-            <li><a href="/file/2013-14年度團秘會簽到表1105.xls">2013-14年度團秘會簽到表 (2013/11/05 更新)</a></li>
+            <!--  <li><a href="./file/2013-14年度團秘會簽到表1105.xls">2013-14年度團秘會簽到表 (2013/11/05 更新)</a></li> -->
+            <li><a href="./file/2014-15年度團秘會簽到表20140805.xlsx">2014-15年度團秘會簽到表 (2014/08/05 更新)</a></li>
           </ul>        
         </div><!--/.span9-->
         <!-- end content -->
