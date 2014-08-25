@@ -94,6 +94,12 @@ function User(data)
     me.birth_year = data.birth_year;
     me.birth_month = data.birth_month;
     me.note = data.note;
+    me.gender = data.gender;
+    me.reg_date = data.reg_date;
+    me.exit_date = data.exit_date;
+    me.exit_reason = data.exit_reason;
+    me.isDistrictTeam = data.isDistrictTeam;
+    me.isAdmin = data.isAdmin;
   }
   else
   {
@@ -104,7 +110,13 @@ function User(data)
     me.title = "";
     me.background = 0;
     me.birth_year = 1984;
-    me.birth_month = 1
+    me.birth_month = 1;
+    me.gender = 1;
+    me.reg_date = "2010/07/01";
+    me.exit_date= "";
+    me.exit_reason = "";
+    me.isDistrictTeam = "0";
+    me.isAdmin = "0";
   }
 
   me.getFBUrl = function()
@@ -127,6 +139,12 @@ function User(data)
     data.birth_year = me.birth_year;
     data.birth_month = me.birth_month;
     data.note = me.note;
+    data.gender = me.gender;
+    data.reg_date = me.reg_date;
+    data.exit_date = me.exit_date;
+    data.exit_reason = me.exit_reason;
+    data.isDistrictTeam = me.isDistrictTeam;
+    data.isAdmin = me.isAdmin;
     return data;
   };
   me.hasFBId = function()
@@ -312,6 +330,7 @@ function Event(data)
     {
       case "0": return "例會";
       case "1": return "活動";
+      case "2": return "理事會";
       default: return "";
     }
   };  

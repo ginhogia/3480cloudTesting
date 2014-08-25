@@ -16,6 +16,8 @@ class User
 	private $birth_month;
 	private $note;
 	private $gender;
+	private $isDistrictTeam;
+	private $isAdmin;
 	private $reg_date; //入團日期
 	private $exit_date; //退團/ob日期
 	private $exit_reason; //退團原因 1.OB 2.退團
@@ -35,6 +37,8 @@ class User
 		$this->reg_date = $data["reg_date"];
 		$this->exit_date = $data["exit_date"];
 		$this->exit_reason = $data["exit_reason"];
+		$this->isDistrictTeam=$data["isDistrictTeam"];
+		$this->isAdmin = $data["isAdmin"];
 	}
 
 	function isValid()
@@ -104,7 +108,10 @@ class User
 
 	function isDistrictTeam()
 	{
-		return false;
+		if ($this->isDistrictTeam)
+			return true;
+		else 
+			return false;
 	}
 
 	function hasClub()
@@ -128,6 +135,8 @@ class User
 		$data["reg_date"] = $this->reg_date;
 		$data["exit_date"] = $this->exit_date;
 		$data["exit_reason"] = $this->exit_reason;
+		$data["isDistrictTeam"] = $this->isDistrictTeam;
+		$data["isAdmin"] = $this->isAdmin;
 		return $data;
 	}
 
@@ -161,10 +170,14 @@ class User
 		$this->reg_date = $data["reg_date"];
 		$this->exit_date = $data["exit_date"];
 		$this->exit_reason = $data["exit_reason"];
+		$this->isDistrictTeam = $data["isDistrictTeam"];
+		$this->isAdmin = $data["isAdmin"];
 		
 		$db = new DB();
 		$sql = "update `user` set `fbid`='{$this->fbid}', `title`='{$this->title}', `club_id`='{$this->club_id}', `name`='{$this->name}', `background`={$this->background}, `birth_year`={$this->birth_year}, `birth_month`={$this->birth_month}, `note`='{$this->note}'
-		, `gender`={$this->gender},`reg_date`={$this->reg_date} where `id`={$id};";
+		  where `id`={$id};";
+// 		$sql = "update `user` set `fbid`='{$this->fbid}', `title`='{$this->title}', `club_id`='{$this->club_id}', `name`='{$this->name}', `background`={$this->background}, `birth_year`={$this->birth_year}, `birth_month`={$this->birth_month}, `note`='{$this->note}'
+// 		, `gender`='{$this->gender}',`reg_date`='{$this->reg_date}', `isDistrictTeam`='{$this->isDistrictTeam}', `isAdmiin`='{$this->isAdmin}' where `id`={$id};";
 		//echo $sql;
 		$db->query($sql);
 		return true;

@@ -5,7 +5,7 @@ require_once("mod/event.php");
 require_once("mod/racyear.php");
 
 $session = new Session();
-$session->setPageId(PAGE_ID_SCHEDULE);
+$session->setPageId(PAGE_ID_TIMELINE);
 $session->checkPermission();
 
 $racyear = Racyear::GetThisYear(); //'201314';

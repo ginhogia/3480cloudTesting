@@ -264,10 +264,26 @@ var EventEditor = function(element)
   {
     var resource = new EventResource();
     resource.event_id = me.data.event.id;
+    var btnFile = me.element.editor.find("input[type-file]");
+    btnFile.prop("disabled",false);
+    var uploadLink = me.element.editor.find("[data-link='upload']");
+    uploadLink.prop('disabled',false);
+    uploadLink.removeClass('disabled');
+    me.element.editor.find("[data-ref='fileName']").text('');
     me.showEditor(resource);
   };
 
   me.element.editor.find("[data-ref='type']").change(applyResourceType);
+  me.element.editor.find("[data-link='upload']").click(function(){
+	  me.element.editor.find("[data-ref='fileName']").text('上傳中');
+	  });
+  me.element.editor.find("input[type=file]").change(function(){
+	  	//$(this).prop("disabled",true);
+	  	var uploadLink = me.element.editor.find("[data-link='upload']");
+	  	uploadLink.prop('disabled',true);
+	  	uploadLink.addClass('disabled');
+		me.element.editor.find("[data-ref='fileName']").text('上傳成功');
+	  });
 
   me.element.editor.find("[data-link='save']").click(function()
   {
@@ -351,7 +367,7 @@ $(document).ready(function()
           	<div class="controls">
                     <label class="radio inline"><input type="radio" name="eventtype" data-ref="eventtype" value="0" />例會</label>
                     <label class="radio inline"><input type="radio" name="eventtype" data-ref="eventtype" value="1" />活動</label>
-                    
+                    <label class="radio inline"><input type="radio" name="eventtype" data-ref="eventtype" value="2" />理事會</label>
                   </div>
           	
             <input type="text" data-ref="date" data-date-format="yyyy/mm/dd" placeholder="日期" /><br />
@@ -430,7 +446,8 @@ $(document).ready(function()
                 <div class="control-group file">
                   <label class="control-label" for="resource_file">檔案</label>
                   <div class="controls">
-                    <a href="#" data-link="upload" class="btn"><input type="file" name="file" />選擇檔案</a>
+                    <a href="#" data-link="upload" class="btn btn-info"><input type="file" name="file" />選擇檔案</a>
+                    <label data-ref="fileName"></label>
                   </div>
                 </div>
               </form>

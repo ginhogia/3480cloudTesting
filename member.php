@@ -338,12 +338,20 @@ $(document).ready(function()
                   </div>
                 </div>
                 <div class="control-group">
+                  <label class="control-label">性別</label>
+                  <div class="controls">
+                    <label class="radio inline"><input type="radio" name="member_gender" data-ref="gender" value="0" />女</label>
+                    <label class="radio inline"><input type="radio" name="member_gender" data-ref="gender" value="1" />男</label>
+                  </div>
+                </div>
+                <div class="control-group">
                   <label class="control-label" for="member_birth">出生年月</label>
                   <div class="controls">
                     <input type="number" class="input-small" id="member_birth" data-ref="birth-year" min="1980" max="2014" />年
                     <input type="number" class="input-small" id="member_birth_month" data-ref="birth-month" min="1" max="12" />月
                   </div>
                 </div>
+                
                 <div class="control-group">
                   <label class="control-label" for="member_note">備註</label>
                   <div class="controls">
