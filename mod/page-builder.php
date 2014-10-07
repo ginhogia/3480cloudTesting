@@ -168,25 +168,24 @@ _T;
 			//$text .= $this->generateNavItem("/club.php", "社團資料登錄", PAGE_ID_CLUB);
 			$text .= $this->generateNavItem("./member.php?" . $_SERVER["QUERY_STRING"], "團員管理", PAGE_ID_MEMBER);
 			$text .= $this->generateNavItem("./plan.php?" . $_SERVER["QUERY_STRING"], "服務計畫提交", PAGE_ID_PLAN);
-      $text .= $this->generateNavItem("./schedule.php?" . $_SERVER["QUERY_STRING"], "年度行事曆登錄", PAGE_ID_SCHEDULE);
-      $text .= $this->generateNavItem("./eventListNew.php?" . $_SERVER["QUERY_STRING"], "例會/活動回顧", PAGE_ID_TIMELINE);
-      		
+     		$text .= $this->generateNavItem("./schedule.php?" . $_SERVER["QUERY_STRING"], "年度行事曆登錄", PAGE_ID_SCHEDULE);
+      		$text .= $this->generateNavItem("./eventListNew.php?" . $_SERVER["QUERY_STRING"], "例會/活動回顧", PAGE_ID_TIMELINE);		
 			//$text .= $this->generateNavItem("/meeting.php", "例會/活動資料登錄", PAGE_ID_MEETING);
 			//$text .= $this->generateNavItem("/attendance.php", "例會出席登錄", PAGE_ID_ATTENDANCE);
 		
 		$text .= <<<_T
 				
 				<li class ="nav-header">個人資料</li>
-				<li>個人資料編輯</li>
 				
-            
 _T;
+		$text .= $this->generateNavItem("./person.php?" . $_SERVER["QUERY_STRING"], "個人資料編輯", PAGE_ID_PERSONEDIT);
 		}
-		if ($this->session->getUser()->isAdmin()){
-			$text .= "<li class='nav-header'>測試功能</li>";
-			//$text .= $this->generateNavItem("./eventListNew.php?" . $_SERVER["QUERY_STRING"], "例會/活動回顧", PAGE_ID_TIMELINE);
-
-		}
+		
+		//test area
+// 		if ($this->session->getUser()->isDistrictTeam()){
+// 			$text .= "<li class='nav-header'>測試功能</li>";
+// 			$text .= $this->generateNavItem("./person.php?" . $_SERVER["QUERY_STRING"], "個人資料編輯測試", PAGE_ID_PERSONEDIT);
+// 		}
 		
 		
 		$text .= <<<_T

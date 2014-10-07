@@ -12,7 +12,7 @@ class Event
 	private $partner;
 	private $note;
 	private $racyear;
-	private $eventType; //活動類型 0例會 1活動
+	private $eventType; //活動類型 0例會 1活動 2理事會
 
 	function __construct($data)
 	{

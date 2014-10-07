@@ -104,7 +104,8 @@ var EventList = function(element)
           $event.find("[data-link='edit-attendance']").css("display","none");
       }
 
-      $event.find("[data-link='edit']").attr("href", "event.php?id=" + event.id + location.search.replace("?","&"));
+      //$event.find("[data-link='edit']").attr("href", "event.php?id=" + event.id + location.search.replace("?","&"));
+      $event.find("[data-link='edit']").attr("href", "event.php?id=" + event.id);
 
 //       $event.find("[data-link='edit']").click(function(e)
 //       {
@@ -125,7 +126,7 @@ var EventList = function(element)
 
     me.data.sort(function(a, b)
     {
-      return a.id - b.id;
+      return new Date(a.date) - new Date(b.date);
     });
     for (var i = 0; i < me.data.length; ++i)
     {
@@ -332,10 +333,10 @@ $(document).ready(function()
             <ul class="inline member-area well well-small" data-ref="unreg">
               <li class="template btn"></li>
             </ul>
-            補出席(不計入團內出席率)
+            補出席但不計入團內出席
             <ul class="inline member-area well well-small" data-ref="regforpersonal">
             </ul>
-            出席
+            出席(含補出席且計入團內出席)
             <ul class="inline member-area well well-small" data-ref="attendee">
             </ul>
             未出席

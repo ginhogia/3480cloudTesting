@@ -351,7 +351,18 @@ $(document).ready(function()
                     <input type="number" class="input-small" id="member_birth_month" data-ref="birth-month" min="1" max="12" />月
                   </div>
                 </div>
-                
+                <div class="control-group">
+                  <label class="control-label" for="member_joindate">入團日期</label>
+                  <div class="controls">
+                    <input type="date" class="input-medium" id="member_joindate" data-ref="reg_date" /> 
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="member_birth">退團/OB日期</label>
+                  <div class="controls">
+                    <input type="date" class="input-medium" id="member_exitdate" data-ref="exit_date" /> 
+                  </div>
+                </div>
                 <div class="control-group">
                   <label class="control-label" for="member_note">備註</label>
                   <div class="controls">

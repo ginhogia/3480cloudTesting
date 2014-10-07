@@ -444,7 +444,7 @@ $(document).ready(function()
                   </div>
                 </div>
                 <div class="control-group file">
-                  <label class="control-label" for="resource_file">檔案</label>
+                  <label class="control-label" for="resource_file">檔案(請勿超過5MB)</label>
                   <div class="controls">
                     <a href="#" data-link="upload" class="btn btn-info"><input type="file" name="file" />選擇檔案</a>
                     <label data-ref="fileName"></label>

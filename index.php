@@ -27,6 +27,7 @@ $builder = new PageBuilder($session);
           <div class="hero-unit">
             <h1>國際扶輪3480地區扶輪青年服務團 雲端服務中心 V2</h1>
             <p>地區資訊服務平台，各項功能陸續上線測試，如遇系統操作問題，請協助回報，讓我們把系統做得更好。</p>
+            <p>操作教學影片(<a href="https://www.youtube.com/channel/UCUXJsAxC7UPhKhb17hA6gEA" target="_blank">Youtube</a>)</p>
             <!--<p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
           </div>
           <div class="row-fluid">

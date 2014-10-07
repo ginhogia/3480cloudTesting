@@ -162,6 +162,86 @@ function User(data)
   };
 }
 
+function Career(data)
+{
+	var me = this;
+	if (data)
+	  {
+	    me.id = data.id;
+	    me.fbid = data.fbid;
+	    me.opendata = data.opendata;
+	    me.name = data.name;
+	    me.club_id = data.club_id;
+	    me.title = data.title;
+	    me.gender = data.gender;
+	    me.industry = data.industry;
+	    me.industrystring = data.industrystring;
+	    me.jobcat = data.jobcat;
+	    me.jobcatstring = data.jobcatstring;
+	    me.company = data.company;
+	    me.jobtitle = data.jobtitle;
+	    me.otherData = data.otherData;
+	  }
+	else{
+		me.id = "0";
+		me.fbid= "";
+	    me.opendata = "0";
+	    me.industrystring = "請選擇-->";
+	    me.jobcatstring = "請選擇-->";
+		me.industry =0;
+		me.jobcat=0;
+	    me.company = "";
+	    me.jobtitle = "";
+	    me.otherData = "";
+	}
+	
+	me.getData = function(){
+		var data = {};
+	    data.id = me.id;
+	    data.fbid = me.fbid;
+	    data.opendata = me.opendata;
+	    data.name = me.name;
+	    data.club_id = me.club_id;
+	    data.title = me.title;
+	    data.gender = me.gender;
+	    data.industry = me.industry;
+	    data.industrystring = me.industrystring;
+	    data.jobcat = me.jobcat;
+	    data.jobcatstring = me.jobcatstring;
+	    data.company = me.company;
+	    data.jobtitle = me.jobtitle;
+	    data.otherData = me.otherData;
+	    return data;
+	};
+	
+	me.save = function(done){
+		var data = me.getData();
+	    console.log(data);
+	    $.post("./api/saveCareer.php", data, done, "json");
+	};
+	
+	me.remove = function(){
+		
+	};
+}
+
+function Industry(data){
+ var me = this;
+ me.id = data.id;
+ me.Name = data.name;
+ 
+ me.getData = function()
+ {
+   var data = {};
+   data.id = me.id;
+   data.name = me.name;
+   return data;
+ };
+ 
+}
+
+
+
 function Page(data)
 {
   var me = this;
@@ -331,6 +411,7 @@ function Event(data)
       case "0": return "例會";
       case "1": return "活動";
       case "2": return "理事會";
+      case 2 : return "理事會";
       default: return "";
     }
   };  
