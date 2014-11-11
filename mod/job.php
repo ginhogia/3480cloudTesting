@@ -38,8 +38,71 @@ class career{
 		$career = new Career($data);
 		return $career;
 	}
+	
+	public static function getCareersByClub($clubID){
+		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat
+		,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring
+		,user_career.opendata, company
+		FROM `rac-cloud`.user_career
+		inner join `rac-cloud`.user on userID = id
+		INNER JOIN `rac-cloud`.career_industry  on industry = IndID
+		INNER JOIN `rac-cloud`.career_jobcat  on jobcat = jobID
+		WHERE user.club_id='{$clubID}' AND user_career.opendata=1";
+		//echo $sql;
+		$db = new DB();
+		$db->query($sql);
+		$careers[] = array();
+		while ($result= $db->fetch_array()){
+		$career = new Career($result);
+		$careers[]=$career;
+		}
+		
+		return $careers;
+	}
+	
+	public static function getCareersByIndustry($industryID){
+		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat
+		,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring
+		,user_career.opendata, company
+		FROM `rac-cloud`.user_career
+		inner join `rac-cloud`.user on userID = id
+		INNER JOIN `rac-cloud`.career_industry  on industry = IndID
+		INNER JOIN `rac-cloud`.career_jobcat  on jobcat = jobID
+		WHERE industry='{$industryID}' AND user_career.opendata=1";
+		//echo $sql;
+		$db = new DB();
+		$db->query($sql);
+		$careers[] = array();
+		while ($result= $db->fetch_array()){
+			$career = new Career($result);
+			$careers[]=$career;
+		}
+		
+		return $careers;
+	}
+	
+	public static function getCareersByJobcat($jobcatID){
+		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat
+		,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring
+		,user_career.opendata, company
+		FROM `rac-cloud`.user_career
+		inner join `rac-cloud`.user on userID = id
+		INNER JOIN `rac-cloud`.career_industry  on industry = IndID
+		INNER JOIN `rac-cloud`.career_jobcat  on jobcat = jobID
+		WHERE jobcat='{$jobcatID}' AND user_career.opendata=1";
+		//echo $sql;
+		$db = new DB();
+		$db->query($sql);
+		$careers[] = array();
+		while ($result= $db->fetch_array()){
+			$career = new Career($result);
+			$careers[]=$career;
+		}
+		
+		return $careers;
+	}
+	
 	public static function getCareerByUserID($userID){
-
 		
 		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat 
 				,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring 

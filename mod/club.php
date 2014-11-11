@@ -88,6 +88,44 @@ class Club
     $name_mapping[38]= "台北圓滿團";
     return idx($name_mapping, $id, "");
   }
+  
+  public static function getClubNameList()
+  {
+  	static $name_mapping = array();
+  	$name_mapping[1]= "台北西門團";
+  	$name_mapping[2]= "台北西區團";
+  	$name_mapping[3]= "中和團";
+  	$name_mapping[4]= "台北延平團";
+  	$name_mapping[5]= "台北艋舺團";
+  	$name_mapping[6]= "台北北門團";
+  	$name_mapping[7]= "台北文山團";
+  	$name_mapping[8]= "台北府門團";
+  	$name_mapping[9]= "永和團";
+  	$name_mapping[10]= "台北芙蓉團";
+  	$name_mapping[11]= "台北城中團";
+  	$name_mapping[12]= "台北城東團";
+  	$name_mapping[13]= "台北稻江團";
+  	$name_mapping[14]= "台北團";
+  	$name_mapping[15]= "翡翠團";
+  	$name_mapping[17]= "台北永福團";
+  	$name_mapping[19]= "台北大稻埕團";
+  	$name_mapping[21]= "台北北海團";
+  	$name_mapping[23]= "台北圓環團";
+  	$name_mapping[24]= "台北慈恩團";
+  	$name_mapping[25]= "台北大安團";
+  	$name_mapping[27]= "台北大龍峒團";
+  	$name_mapping[28]= "台北西北區團";
+  	$name_mapping[29]= "台北永平團";
+  	$name_mapping[31]= "台北百城團";
+  	$name_mapping[32]= "台北客家團";
+  	$name_mapping[33]= "台北東海團";
+  	$name_mapping[34]= "台北群英團";
+  	$name_mapping[35]= "金門團";
+  	$name_mapping[36]= "台北錫口團";
+  	$name_mapping[37]= "台北新世紀團";
+  	$name_mapping[38]= "台北圓滿團";
+  	return $name_mapping;
+  }
 
   public static function NullClub()
   {

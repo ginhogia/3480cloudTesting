@@ -20,7 +20,7 @@ if (!$page->hasOwner($api->getSession()->getUser()))
 
 $user = User::getUserById($user_id);
 if (is_null($user))
-	$aip->returnCustomError(1, "User id does not exist.");
+	$api->returnCustomError(1, "User id does not exist.");
 if (!$user->update($data))
 	$api->returnCustomError(2, "Unable to update user.");
 $api->returnSuccess();

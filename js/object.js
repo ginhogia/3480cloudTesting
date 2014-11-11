@@ -202,6 +202,7 @@ function Career(data)
 	    data.opendata = me.opendata;
 	    data.name = me.name;
 	    data.club_id = me.club_id;
+	    
 	    data.title = me.title;
 	    data.gender = me.gender;
 	    data.industry = me.industry;
@@ -223,6 +224,8 @@ function Career(data)
 	me.remove = function(){
 		
 	};
+	
+	
 }
 
 function Industry(data){

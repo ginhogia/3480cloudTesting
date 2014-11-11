@@ -161,10 +161,13 @@ _T;
 					<li class="nav-header">資料查詢</li>
 					<li>各年度行事曆</li>
 					<li>團員名單</li>
-					<li>地區團員職業分類名錄</li>
-					
-              <li class="nav-header">各團資料管理</li>
 _T;
+			$text .= $this->generateNavItem("./occupation.php?" . $_SERVER["QUERY_STRING"], "地區團員職業分類名錄", PAGE_ID_JOBQUERY);
+			
+			$text .= "<li class=\"nav-header\">各團資料管理</li>";
+
+			
+			
 			//$text .= $this->generateNavItem("/club.php", "社團資料登錄", PAGE_ID_CLUB);
 			$text .= $this->generateNavItem("./member.php?" . $_SERVER["QUERY_STRING"], "團員管理", PAGE_ID_MEMBER);
 			$text .= $this->generateNavItem("./plan.php?" . $_SERVER["QUERY_STRING"], "服務計畫提交", PAGE_ID_PLAN);
@@ -182,10 +185,10 @@ _T;
 		}
 		
 		//test area
-// 		if ($this->session->getUser()->isDistrictTeam()){
-// 			$text .= "<li class='nav-header'>測試功能</li>";
-// 			$text .= $this->generateNavItem("./person.php?" . $_SERVER["QUERY_STRING"], "個人資料編輯測試", PAGE_ID_PERSONEDIT);
-// 		}
+		if ($this->session->getUser()->isDistrictTeam()){
+			$text .= "<li class='nav-header'>測試功能</li>";
+			//$text .= $this->generateNavItem("./occupation.php?" . $_SERVER["QUERY_STRING"], "職業查詢測試", PAGE_ID_JOBQUERY);
+		}
 		
 		
 		$text .= <<<_T

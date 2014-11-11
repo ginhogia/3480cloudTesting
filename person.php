@@ -17,72 +17,75 @@ $career = Career::getCareerByUserID($userID);
 $data = array();
 $data["career"] = $career? $career->getData(): null;
 
-$data["inds"] = array();
+$data["inds"] = industry::getIndustriesArray();
+$data["jobs"] = jobcat::getJobcatArray();
 
-$temp = Industry::getIndustriesByCat("資訊科技");
-if ($temp)
-foreach ($temp as $Industry)
-{
-	$data["inds"]["indcat1"][] = $Industry->getData();
-}
+// $data["inds"] = array();
 
-$temp = Industry::getIndustriesByCat("傳產/製造");
-if ($temp)
-foreach ($temp as $Industry)
-{
-	$data["inds"]["indcat2"][] = $Industry->getData();
-}
-$temp = Industry::getIndustriesByCat("工商服務");
-if ($temp)
-foreach ($temp as $Industry)
-{
-	$data["inds"]["indcat3"][] = $Industry->getData();
-}
-$temp = Industry::getIndustriesByCat("民生服務");
-if ($temp)
-foreach ($temp as $Industry)
-{
-	$data["inds"]["indcat4"][] = $Industry->getData();
-}
-$temp = Industry::getIndustriesByCat("文教/傳播");
-if ($temp)
-foreach ($temp as $Industry)
-{
-	$data["inds"]["indcat5"][] = $Industry->getData();
-}
+// $temp = Industry::getIndustriesByCat("資訊科技");
+// if ($temp)
+// foreach ($temp as $Industry)
+// {
+// 	$data["inds"]["indcat1"][] = $Industry->getData();
+// }
 
-$data["jobs"] = array();
+// $temp = Industry::getIndustriesByCat("傳產/製造");
+// if ($temp)
+// foreach ($temp as $Industry)
+// {
+// 	$data["inds"]["indcat2"][] = $Industry->getData();
+// }
+// $temp = Industry::getIndustriesByCat("工商服務");
+// if ($temp)
+// foreach ($temp as $Industry)
+// {
+// 	$data["inds"]["indcat3"][] = $Industry->getData();
+// }
+// $temp = Industry::getIndustriesByCat("民生服務");
+// if ($temp)
+// foreach ($temp as $Industry)
+// {
+// 	$data["inds"]["indcat4"][] = $Industry->getData();
+// }
+// $temp = Industry::getIndustriesByCat("文教/傳播");
+// if ($temp)
+// foreach ($temp as $Industry)
+// {
+// 	$data["inds"]["indcat5"][] = $Industry->getData();
+// }
 
-$temp = jobcat::getJobcatsByCat("經管行銷");
-if ($temp)
-foreach ($temp as $jobcat)
-{
-	$data["jobs"]["jobcat1"][] = $jobcat->getData();
-}
-$temp = jobcat::getJobcatsByCat("工程製造");
-if ($temp)
-foreach ($temp as $jobcat)
-{
-	$data["jobs"]["jobcat2"][] = $jobcat->getData();
-}
-$temp = jobcat::getJobcatsByCat("文化創意");
-if ($temp)
-foreach ($temp as $jobcat)
-{
-	$data["jobs"]["jobcat3"][] = $jobcat->getData();
-}
-$temp = jobcat::getJobcatsByCat("工商服務");
-if ($temp)
-foreach ($temp as $jobcat)
-{
-	$data["jobs"]["jobcat4"][] = $jobcat->getData();
-}
-$temp = jobcat::getJobcatsByCat("其他專業");
-if ($temp)
-foreach ($temp as $jobcat)
-{
-	$data["jobs"]["jobcat5"][] = $jobcat->getData();
-}
+// $data["jobs"] = array();
+
+// $temp = jobcat::getJobcatsByCat("經管行銷");
+// if ($temp)
+// foreach ($temp as $jobcat)
+// {
+// 	$data["jobs"]["jobcat1"][] = $jobcat->getData();
+// }
+// $temp = jobcat::getJobcatsByCat("工程製造");
+// if ($temp)
+// foreach ($temp as $jobcat)
+// {
+// 	$data["jobs"]["jobcat2"][] = $jobcat->getData();
+// }
+// $temp = jobcat::getJobcatsByCat("文化創意");
+// if ($temp)
+// foreach ($temp as $jobcat)
+// {
+// 	$data["jobs"]["jobcat3"][] = $jobcat->getData();
+// }
+// $temp = jobcat::getJobcatsByCat("工商服務");
+// if ($temp)
+// foreach ($temp as $jobcat)
+// {
+// 	$data["jobs"]["jobcat4"][] = $jobcat->getData();
+// }
+// $temp = jobcat::getJobcatsByCat("其他專業");
+// if ($temp)
+// foreach ($temp as $jobcat)
+// {
+// 	$data["jobs"]["jobcat5"][] = $jobcat->getData();
+// }
 
 
 $builder = new PageBuilder($session, $data);
@@ -248,6 +251,16 @@ var PersonEditor = function(element)
 	{
 		alert("請選擇是否公開資料");
 		me.element.basic.find("input[name='opendata']").focus();
+		return;
+	}
+	if (me.element.basic.find("[name='industryID']").val() == "0")
+	{
+		alert("請選擇您的產業類別");
+		return;
+	}
+	if (me.element.basic.find("[name='jobcatID']").val() == "0")
+	{
+		alert("請選擇您的職務類別");
 		return;
 	}
 
