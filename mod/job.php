@@ -39,7 +39,23 @@ class career{
 		return $career;
 	}
 	
+	public static function getCareerFinishData(){
+		$sql ="select a.club_id, count(a.club_id) as totalNum, IFNULL(b.done,0) as done, IFNULL(b.showoff,0) as showoff from user a
+		left join (select club_id, count(club_id) as done, sum(opendata) as showoff from user_career
+		inner join user on user_career.userID = user.id group by club_id) b
+		on a.club_id = b.club_id
+		group by club_id ";
+		$db = new DB();
+		$db->query($sql);
+		$outputs[] = array();
+		while($result = $db->fetch_array()){
+			$outputs[] = $result;
+		}
+		return $outputs;
+	}
+	
 	public static function getCareersByClub($clubID){
+		$clubID = mysql_escape_string($clubID);
 		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat
 		,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring
 		,user_career.opendata, company
@@ -61,6 +77,7 @@ class career{
 	}
 	
 	public static function getCareersByIndustry($industryID){
+		$industryID = mysql_escape_string($industryID);
 		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat
 		,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring
 		,user_career.opendata, company
@@ -82,6 +99,7 @@ class career{
 	}
 	
 	public static function getCareersByJobcat($jobcatID){
+		$jobcatID = mysql_escape_string($jobcatID);
 		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat
 		,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring
 		,user_career.opendata, company
@@ -103,7 +121,7 @@ class career{
 	}
 	
 	public static function getCareerByUserID($userID){
-		
+		$userID = mysql_escape_string($userID);
 		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat 
 				,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring 
 				,user_career.opendata, company 

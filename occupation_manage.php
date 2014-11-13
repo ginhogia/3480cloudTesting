@@ -5,8 +5,8 @@ require_once("mod/job.php");
 require_once("mod/Industry.php");
 require_once("mod/racyear.php");
 $session = new Session();
-$session->setPageId(PAGE_ID_JOBQUERY);
-$session->checkPermission();	
+$session->setPageId(PAGE_ID_MANAGE_CAREER);
+$session->checkPermissionForDistrictTeam();	
 
 //$racyear = Racyear::GetThisYear();
 $userID = $session->getUser()->getId();
@@ -16,6 +16,7 @@ $data = array();
 $data["clubList"] = club::getClubNameList();
 $data["inds"] = industry::getIndustriesArray();
 $data["jobs"] = jobcat::getJobcatArray();
+$data["compelete"] = career::getCareerFinishData();
 
 $builder = new PageBuilder($session,$data);
 ?>
@@ -71,6 +72,71 @@ var OccupationDataSource = function(){
 	var me = this;
 	
 };
+
+var CompeleteTable = function(element){
+	var me = this;
+	me.element ={};
+	me.element.root = $(element);
+	me.element.table = me.element.root.find("#compeleteTable");
+	me.element.tablebody = me.element.table.find("tbody");
+	me.data={};
+	me.setData = function(data){
+		me.data = [];
+	  	for (var i = 0; i < data.length; ++i)
+	  		me.data.push(data[i]);
+	    me.refresh();
+	};
+
+	me.refresh = function(){
+		
+		me.element.tablebody.find("tr.content").remove();
+		
+		var addResult = function(career)
+	    {
+		  if (career.length != 0)
+		  {
+	      var $careerlist = me.element.tablebody.find("tr.template").clone();	      
+	      $careerlist.removeClass("template");
+	      $careerlist.addClass("content");
+	      $careerlist.attr("data-src", career.club_id);
+	      //$meeting.find("[data-ref='id']").text(meeting.id);
+	      $careerlist.find("[data-ref='club_name']").text(_r.data.clubList[career.club_id]);
+	      $careerlist.find("[data-ref='totalNum']").text(career.totalNum);
+	      $careerlist.find("[data-ref='done']").text(career.done);
+	      var doneRate;
+	      	if(career.totalNum ==0)
+		      	doneRate = 0;
+	      	else
+		      	doneRate = ((career.done / career.totalNum) * 100).toFixed(1);
+	      $careerlist.find("[data-ref='done_percent']").text(doneRate + '%');
+	      $careerlist.find("[data-ref='showoff']").text(career.showoff);
+	      var showoffRate;
+	      	if (career.done == 0)
+		      	showoffRate = 0;
+	      	else
+	      		showoffRate = ((career.showoff / career.done) * 100).toFixed(1);
+	      $careerlist.find("[data-ref='showoff_percent']").text(showoffRate + '%');
+	     
+
+// 	      $careerlist.find("[data-link='more']").click(function(e)
+// 	      {
+// 	        var id = $(e.target).parents("tr").attr("data-src");
+// 	        var career = me.getCareerById(id);
+// 	        me.openMoreData(career);
+// 	      });
+
+	      me.element.tablebody.append($careerlist);
+		  }
+		};
+
+		for (var i = 0; i < me.data.length; ++i)
+    	{
+			addResult(me.data[i]);
+    	}
+    
+		};
+};
+
 
 var QueryResult = function(element){
 	var me = this;
@@ -181,167 +247,55 @@ var QueryResult = function(element){
 	}
     
 	};
-	me.openMoreData = function(data){
-		me.element.moreInfoArea.find("[data-link='back']").click(function(){
-// 			me.element.moreInfoArea.hide("slide",{direction: "right"},400);
-// 			me.element.listArea.show("slide",{direction: "left"},400);
-			me.showOrHideDetailModal(false);
-			});
-		
-		me.element.moreInfoArea.find("[data-ref='name']").text(data.name);
-		me.element.moreInfoArea.find("[data-ref='club']").text(_r.data.clubList[data.club_id]);
-		me.element.moreInfoArea.find("[data-ref='company']").text(data.company);
-	    me.element.moreInfoArea.find("[data-ref='jobtitle']").text(data.jobtitle);
-	    me.element.moreInfoArea.find("[data-ref='otherData']").text(data.otherData);
-	    me.element.moreInfoArea.find("[data-ref='industryName']").text(data.industrystring);
-	    me.element.moreInfoArea.find("[data-ref='jobcatName']").text(data.jobcatstring);
-
-	    me.showOrHideDetailModal(true);
-// 		me.element.listArea.hide("slide",{direction: "left"},1000);
-// 		me.element.moreInfoArea.show("slide",{direction: "right"},1000);
-	};
-
-	me.showOrHideDetailModal = function(show,anispeed){
-		speed = 600;
-		if(!speed)
-			speed = anispeed;
-		if (show == true){
-			me.element.listArea.hide("slide",{direction: "left"},speed);
-			me.element.moreInfoArea.show("slide",{direction: "right"},speed);
-		}
-		else{
-			me.element.moreInfoArea.hide("slide",{direction: "right"},speed);
-			me.element.listArea.show("slide",{direction: "left"},speed);
-		}
-	};
+	
 };
 
 
 
 $(document).ready(function()
 		{
-			clubListTable(_r.data.clubList,4,$("#partyArea .tableContent"));
-			var ind = new IndData(_r.data);
-			ind.refresh();
-			var job = new JobCatData(_r.data);
-			job.refresh();
-
+			//clubListTable(_r.data.clubList,4,$("#partyArea .tableContent"));
+			
+			var compelete = new CompeleteTable($("#page_content"));
+			compelete.setData(_r.data.compelete);
 			var resultArea = new QueryResult($("#page_content"));
 			//resultArea.setData(indTestData);
 
-			$("[data-link='queryClub']").click(function(){
- 				var club_id = $(this).attr("data-ref");
-				resultArea.getClubData(club_id);
- 				resultArea.showOrHideDetailModal(false,50);
-				$("[data-ref='queryList']").modal('show');
-				  return false;
-			  });
 			
-			$("[data-link='setInd']").click(function(){
-				var indID = $(this).attr("data-ref");
-				resultArea.getIndData(indID);
- 				resultArea.showOrHideDetailModal(false,50);
-				$("[data-ref='queryList']").modal('show');
-				  return false;
-			  });
-			$("[data-link='setJob']").click(function(){
-				var jobID = $(this).attr("data-ref");
-				resultArea.getJobData(jobID);
- 				resultArea.showOrHideDetailModal(false,50);
-				$("[data-ref='queryList']").modal('show');
-				  return false;
-			  });
-			$(".areaHeader").click(function(){
-				var $contentArea = $(this).parent().find(".tableContent");
-				
-				$(".tableContent").each(function(){
-						$(this).slideUp();
-					});
-				$contentArea.slideDown();
-			});
+			
 		});
 
 </script>
 
         <!-- begin content -->
         <div class="span9" id="page_content">
-          <h1>地區職業分類名錄</h1>
+          <h1>地區職業分類名錄管理</h1>
           
-          <!-- party list -->
-          <div id="partyArea">
-          	<div class="areaHeader">
-          	<h3>依團名查詢</h3>
-         	 </div>
-          	<div class="tableContent hide">
-<!--           		<table class="table table-striped table-bordered"> -->
-<!--           			<tbody> -->
-          		
-<!--           			</tbody> -->
-<!--           		</table> -->
-          	</div>
-          
-          </div>
-          <!-- end party list -->
-          
-          
-          <!-- industry list -->
-          <div id="industryArea">
-          <div class="areaHeader">
-          	<h3>依產業查詢</h3>
-          </div>
-          <div class="tableContent hide">
-          	<table class="table table-striped table-bordered">
+          <div class="tableContent">
+          	<table id="compeleteTable" class="table table-striped table-bordered">
                   	<thead>
                   		<tr>
-                  			<th>資訊科技</th>
-                  			<th>傳產/製造</th>
-                  			<th>工商服務</th>
-                  			<th>民生服務</th>
-                  			<th>文教/傳播</th>
+                  			<th>團名</th>
+                  			<th>總人數</th>
+                  			<th>填寫人數</th>
+                  			<th>填寫比率</th>
+                  			<th>開放查詢人數</th>
+                  			<th>開放比率</th>
                   		</tr>
                   	</thead>
                   	<tbody>
-                  		<td data-ref="indcat1"></td>
-                  		<td data-ref="indcat2"></td>
-                  		<td data-ref="indcat3"></td>
-                  		<td data-ref="indcat4"></td>
-                  		<td data-ref="indcat5"></td>
-                  	</tbody>
-          	</table>
-          </div>
-          
-          </div>
-          <!-- industry end -->
-          
-          
-          <!-- jobCatagory list -->
-          <div id="jobcatArea">
-          <div class="areaHeader">
-          	<h3>依職務查詢</h3>
-          </div>
-          <div class="tableContent hide">
-          	<table class="table table-striped table-bordered">
-                  	<thead>
-                  		<tr>
-                  			<th>資訊科技</th>
-                  			<th>傳產/製造</th>
-                  			<th>工商服務</th>
-                  			<th>民生服務</th>
-                  			<th>文教/傳播</th>
+                  		<tr class="template">
+                  		<td data-ref="club_name"></td>
+                  		<td data-ref="totalNum"></td>
+                  		<td data-ref="done"></td>
+                  		<td data-ref="done_percent"></td>
+                  		<td data-ref="showoff"></td>
+                  		<td data-ref="showoff_percent"></td>
                   		</tr>
-                  	</thead>
-                  	<tbody>
-                  		<td data-ref="jobcat1"></td>
-                  		<td data-ref="jobcat2"></td>
-                  		<td data-ref="jobcat3"></td>
-                  		<td data-ref="jobcat4"></td>
-                  		<td data-ref="jobcat5"></td>
                   	</tbody>
           	</table>
           </div>
-          
-          </div>
-          <!-- jobCatagory end -->
+                 
           
           <!-- query result -->
           <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" data-ref="queryList">

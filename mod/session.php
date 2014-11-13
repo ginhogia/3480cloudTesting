@@ -78,6 +78,15 @@ class Session
 			exit(0);
 		}
 	}
+	
+	function checkPermissionForDistrictTeam()
+	{
+		if (!$this->getUser()->isDistrictTeam())
+		{
+			header("Location: /");
+			exit(0);
+		}
+	}
 
 	function getData()
 	{

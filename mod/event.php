@@ -100,6 +100,8 @@ class Event
 		if (!$club_id)
 			return $meetings;
 		
+		$club_id = mysql_escape_string($club_id);
+		$racyear = mysql_escape_string($racyear);
 		$db = new DB();
 		$db->query("select event_id, club_id, DATE_FORMAT(date,'%Y/%m/%d') as date, topic, location, partner, note,eventType,racyear from event where club_id={$club_id} and racyear='{$racyear}'");
 		while ($result = $db->fetch_array())
@@ -114,6 +116,7 @@ class Event
 	public static function getEvent($event_id)
 	{
 		$db = new DB();
+		$event_id = mysql_escape_string($event_id);
 		$db->query("select event_id, club_id, DATE_FORMAT(date,'%Y/%m/%d') as date, topic, location, partner, note, eventType,racyear from event where event_id={$event_id}");
 		$result = $db->fetch_array();
 		if ($result){
@@ -362,7 +365,8 @@ class EventResource
 		$resources = array();
 		if (!$event_id)
 			return $resources;
-
+		
+		$event_id = mysql_escape_string($event_id);
 		$db = new DB();
 		$db->query("select resource_id, club_id, event_id, type, topic, fbid, UNIX_TIMESTAMP(last_update) as last_update, original_name from event_resource where event_id={$event_id}");
 		while ($result = $db->fetch_array())
@@ -376,7 +380,8 @@ class EventResource
 	{
 		if (!$id)
 			return null;
-
+		
+		$id = mysql_escape_string($id);
 		$db = new DB();
 		$db->query("select resource_id, club_id, event_id, type, topic, fbid, UNIX_TIMESTAMP(last_update) as last_update, original_name from event_resource where resource_id={$id}");
 		$data = $db->fetch_array();

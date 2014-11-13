@@ -13,6 +13,8 @@ define("PAGE_ID_TIMELINE", 104);
 define("PAGE_ID_PERSONEDIT",201);
 define("PAGE_ID_JOBQUERY",202);
 
+
+define("PAGE_ID_MANAGE_CAREER",902);
 // define("PAGE_ID_MEETING", 105);
 // define("PAGE_ID_ATTENDANCE", 106);
 ?>

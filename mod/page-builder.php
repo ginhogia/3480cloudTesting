@@ -40,6 +40,7 @@ class PageBuilder
     <meta name="description" content="">
     <meta name="author" content="zinien@gmail.com">
     
+	<link href="favicon.ico" rel="icon">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/page.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -59,6 +60,18 @@ class PageBuilder
       })(window);
     </script>
     <script src="js/loader.js"></script>
+				
+	
+	<script>
+	//google analytics
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56685707-1', 'auto');
+  ga('send', 'pageview');
+	</script>
   </head>
 _T;
 		$text = str_replace("%FB_APP_ID%", AppInfo::appID(), $text);
@@ -186,8 +199,9 @@ _T;
 		
 		//test area
 		if ($this->session->getUser()->isDistrictTeam()){
-			$text .= "<li class='nav-header'>測試功能</li>";
+			$text .= "<li class='nav-header'>地區團隊專用  ♪～</li>";
 			//$text .= $this->generateNavItem("./occupation.php?" . $_SERVER["QUERY_STRING"], "職業查詢測試", PAGE_ID_JOBQUERY);
+			$text .= $this->generateNavItem("./occupation_manage.php?" . $_SERVER["QUERY_STRING"], "職業登錄情形", PAGE_ID_MANAGE_CAREER);
 		}
 		
 		

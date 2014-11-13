@@ -146,6 +146,8 @@ class Meeting
 		if (!$club_id)
 			return $meetings;
 		$db = new DB();
+		$club_id = mysql_escape_string($club_id);
+		$racyear = mysql_escape_string($racyear);
 		$db->query("select meeting_id, club_id, DATE_FORMAT(date,'%Y/%m/%d') as date, topic, type, location, reg_time, note,racyear from meeting_schedule where club_id={$club_id} and racyear={$racyear}");
 		while ($result= $db->fetch_array()){
 			$meeting = new Meeting($result);
@@ -159,6 +161,9 @@ class Meeting
 	public static function getMeetingByRacyear($club_id, $meeting_id,$racyear)
 	{
 		$db = new DB();
+		$club_id = mysql_escape_string($club_id);
+		$meeting_id = mysql_escape_string($meeting_id);
+		$racyear = mysql_escape_string($racyear);
 		$db->query("select meeting_id, club_id, DATE_FORMAT(date,'%Y/%m/%d') as date, topic, type, location, reg_time, note,racyear from meeting_schedule where club_id={$club_id} and meeting_id={$meeting_id} and racyear={$racyear}");
 		$result = $db->fetch_array();
 		if ($result)
