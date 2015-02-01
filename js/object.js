@@ -100,6 +100,7 @@ function User(data)
     me.exit_reason = data.exit_reason;
     me.isDistrictTeam = data.isDistrictTeam;
     me.isAdmin = data.isAdmin;
+    me.HasJobData = data.HasJobData;
   }
   else
   {
@@ -117,6 +118,7 @@ function User(data)
     me.exit_reason = "";
     me.isDistrictTeam = "0";
     me.isAdmin = "0";
+    me.HasJobData = "0";
   }
 
   me.getFBUrl = function()
@@ -145,6 +147,7 @@ function User(data)
     data.exit_reason = me.exit_reason;
     data.isDistrictTeam = me.isDistrictTeam;
     data.isAdmin = me.isAdmin;
+    data.HasJobData = me.HasJobData;
     return data;
   };
   me.hasFBId = function()
@@ -154,6 +157,13 @@ function User(data)
   me.isNew = function()
   {
     return me.id == 0;
+  };
+  me.hasJobData = function()
+  {
+	  if (me.HasJobData == '1')
+		  return true;
+	  else
+		  return false;
   };
   me.save = function(done)
   {

@@ -21,6 +21,7 @@ class User
 	private $reg_date; //入團日期
 	private $exit_date; //退團/ob日期
 	private $exit_reason; //退團原因 1.OB 2.退團
+	private $HasJobData;
 
 	function __construct($data)
 	{
@@ -39,6 +40,15 @@ class User
 		$this->exit_reason = $data["exit_reason"];
 		$this->isDistrictTeam=$data["isDistrictTeam"];
 		$this->isAdmin = $data["isAdmin"];
+		$this->HasJobData = $data["HasJobData"];
+	}
+	
+	function hasJobData()
+	{
+		if( $this->HasJobData == "1")
+			return true;
+		else 
+			return false;
 	}
 
 	function isValid()
@@ -137,6 +147,7 @@ class User
 		$data["exit_reason"] = $this->exit_reason;
 		$data["isDistrictTeam"] = $this->isDistrictTeam;
 		$data["isAdmin"] = $this->isAdmin;
+		$data["HasJobData"] = $this->HasJobData;
 		return $data;
 	}
 
@@ -152,6 +163,7 @@ class User
 		}
 		$id = $this->id;
 		$db->query("delete from user where id={$id}");
+		$db->query("delete from user_career where userID={$id}");
 		return true;
 	}
 
@@ -177,8 +189,8 @@ class User
 		$sql = "update `user` set `fbid`='{$this->fbid}', `title`='{$this->title}', `club_id`='{$this->club_id}', `name`='{$this->name}', `background`={$this->background}, `birth_year`={$this->birth_year}, `birth_month`={$this->birth_month}, `note`='{$this->note}'
 		  where `id`={$id};";
 // 		$sql = "update `user` set `fbid`='{$this->fbid}', `title`='{$this->title}', `club_id`='{$this->club_id}', `name`='{$this->name}', `background`={$this->background}, `birth_year`={$this->birth_year}, `birth_month`={$this->birth_month}, `note`='{$this->note}'
-// 		, `gender`='{$this->gender}',`reg_date`='{$this->reg_date}', `isDistrictTeam`='{$this->isDistrictTeam}', `isAdmiin`='{$this->isAdmin}' where `id`={$id};";
-		//echo $sql;
+// 		, `gender`='{$this->gender}',`reg_date`='{$this->reg_date}' where `id`={$id};";
+//		echo $sql;
 		$db->query($sql);
 		return true;
 	}

@@ -54,8 +54,11 @@ class career{
 		return $outputs;
 	}
 	
-	public static function getCareersByClub($clubID){
+	public static function getCareersByClub($clubID,$isShowAll){
 		$clubID = mysql_escape_string($clubID);
+		$open = " AND user_career.opendata=1";
+		if ($isShowAll)
+			$open = " ";
 		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat
 		,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring
 		,user_career.opendata, company
@@ -63,7 +66,8 @@ class career{
 		inner join `rac-cloud`.user on userID = id
 		INNER JOIN `rac-cloud`.career_industry  on industry = IndID
 		INNER JOIN `rac-cloud`.career_jobcat  on jobcat = jobID
-		WHERE user.club_id='{$clubID}' AND user_career.opendata=1";
+		WHERE user.club_id='{$clubID}' " . $open;
+		
 		//echo $sql;
 		$db = new DB();
 		$db->query($sql);
@@ -76,8 +80,11 @@ class career{
 		return $careers;
 	}
 	
-	public static function getCareersByIndustry($industryID){
+	public static function getCareersByIndustry($industryID,$isShowAll){
 		$industryID = mysql_escape_string($industryID);
+		$open = " AND user_career.opendata=1";
+		if ($isShowAll)
+			$open = " ";
 		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat
 		,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring
 		,user_career.opendata, company
@@ -85,7 +92,7 @@ class career{
 		inner join `rac-cloud`.user on userID = id
 		INNER JOIN `rac-cloud`.career_industry  on industry = IndID
 		INNER JOIN `rac-cloud`.career_jobcat  on jobcat = jobID
-		WHERE industry='{$industryID}' AND user_career.opendata=1";
+		WHERE industry='{$industryID}' " . $open;
 		//echo $sql;
 		$db = new DB();
 		$db->query($sql);
@@ -98,8 +105,11 @@ class career{
 		return $careers;
 	}
 	
-	public static function getCareersByJobcat($jobcatID){
+	public static function getCareersByJobcat($jobcatID,$isShowAll){
 		$jobcatID = mysql_escape_string($jobcatID);
+		$open = " AND user_career.opendata=1";
+		if ($isShowAll)
+			$open = " ";
 		$sql ="SELECT user_career.userID, user.club_id,user.name, user_career.industry, user_career.jobcat
 		,user_career.jobtitle, user_career.otherData , career_industry.Name as industrystring, career_jobcat.Name as jobcatstring
 		,user_career.opendata, company
@@ -107,7 +117,7 @@ class career{
 		inner join `rac-cloud`.user on userID = id
 		INNER JOIN `rac-cloud`.career_industry  on industry = IndID
 		INNER JOIN `rac-cloud`.career_jobcat  on jobcat = jobID
-		WHERE jobcat='{$jobcatID}' AND user_career.opendata=1";
+		WHERE jobcat='{$jobcatID}' " . $open;
 		//echo $sql;
 		$db = new DB();
 		$db->query($sql);

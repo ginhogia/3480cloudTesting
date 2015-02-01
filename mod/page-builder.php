@@ -16,14 +16,14 @@ class PageBuilder
     $this->data = $data;
   }
   
-  function outputAdminArea()
+  public static  function clubSelector()
   {
   	$text =  "<select id='selClub'>";
   	
   	for($i=0;$i<=38;++$i)
   	{
   		if ($i != 16 && $i!=18 && $i!=20 && $i!=22 && $i!=26 && $i!=30)
-  		$text.= "<option value='".i . "'>" . Club::getClubNameById($i) . "</option>";
+  		$text.= "<option value='".$i . "'>" . Club::getClubNameById($i) . "</option>";
   	}
           	
         $text.= "</select>";
@@ -97,12 +97,12 @@ _T;
 _T;
 		if ($this->session->getUser()->isAdmin())
 		{
-			$text .=  "<select id='selClub' style='display:none;'>";
+			$text .=  "<select id='selClubAdmin' style='display:none;'>";
 			 
 			for($i=0;$i<=38;++$i)
 			{
 				if ($i != 16 && $i!=18 && $i!=20 && $i!=22 && $i!=26 && $i!=30)
-					$text.= "<option value='".i . "'>" . Club::getClubNameById($i) . "</option>";
+					$text.= "<option value='".$i . "'>" . Club::getClubNameById($i) . "</option>";
 			}
 			 
 			$text.= "</select>";
@@ -172,9 +172,10 @@ _T;
 			$text .= <<<_T
 			
 					<li class="nav-header">資料查詢</li>
-					<li>各年度行事曆</li>
-					<li>團員名單</li>
 _T;
+			$text .=$this->generateNavItem("./querySchedule.php?".$_SERVER["QUERY_STRING"], "各團年度行事曆", PAGE_ID_SCHEDULEQUERY);
+			$text .="<li>團員名單</li>";
+
 			$text .= $this->generateNavItem("./occupation.php?" . $_SERVER["QUERY_STRING"], "地區團員職業分類名錄", PAGE_ID_JOBQUERY);
 			
 			$text .= "<li class=\"nav-header\">各團資料管理</li>";
@@ -182,7 +183,7 @@ _T;
 			
 			
 			//$text .= $this->generateNavItem("/club.php", "社團資料登錄", PAGE_ID_CLUB);
-			$text .= $this->generateNavItem("./member.php?" . $_SERVER["QUERY_STRING"], "團員管理", PAGE_ID_MEMBER);
+			$text .= $this->generateNavItem("./memberWithJob.php?" . $_SERVER["QUERY_STRING"], "團員管理", PAGE_ID_MEMBER);
 			$text .= $this->generateNavItem("./plan.php?" . $_SERVER["QUERY_STRING"], "服務計畫提交", PAGE_ID_PLAN);
      		$text .= $this->generateNavItem("./schedule.php?" . $_SERVER["QUERY_STRING"], "年度行事曆登錄", PAGE_ID_SCHEDULE);
       		$text .= $this->generateNavItem("./eventListNew.php?" . $_SERVER["QUERY_STRING"], "例會/活動回顧", PAGE_ID_TIMELINE);		

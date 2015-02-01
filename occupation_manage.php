@@ -90,6 +90,11 @@ var CompeleteTable = function(element){
 	me.refresh = function(){
 		
 		me.element.tablebody.find("tr.content").remove();
+
+		var genClubLink = function(club_id){
+			var link = '<a data-link="queryClub" data-ref="'+ club_id + '">'+ _r.data.clubList[club_id]  +'</a>';
+			return link;
+		};
 		
 		var addResult = function(career)
 	    {
@@ -100,7 +105,7 @@ var CompeleteTable = function(element){
 	      $careerlist.addClass("content");
 	      $careerlist.attr("data-src", career.club_id);
 	      //$meeting.find("[data-ref='id']").text(meeting.id);
-	      $careerlist.find("[data-ref='club_name']").text(_r.data.clubList[career.club_id]);
+	      $careerlist.find("[data-ref='club_name']").append(genClubLink(career.club_id));
 	      $careerlist.find("[data-ref='totalNum']").text(career.totalNum);
 	      $careerlist.find("[data-ref='done']").text(career.done);
 	      var doneRate;
@@ -247,6 +252,36 @@ var QueryResult = function(element){
 	}
     
 	};
+
+	me.openMoreData = function(data){
+		me.element.moreInfoArea.find("[data-link='back']").click(function(){
+			me.showOrHideDetailModal(false);
+			});
+		
+		me.element.moreInfoArea.find("[data-ref='name']").text(data.name);
+		me.element.moreInfoArea.find("[data-ref='club']").text(_r.data.clubList[data.club_id]);
+		me.element.moreInfoArea.find("[data-ref='company']").text(data.company);
+	    me.element.moreInfoArea.find("[data-ref='jobtitle']").text(data.jobtitle);
+	    me.element.moreInfoArea.find("[data-ref='otherData']").text(data.otherData);
+	    me.element.moreInfoArea.find("[data-ref='industryName']").text(data.industrystring);
+	    me.element.moreInfoArea.find("[data-ref='jobcatName']").text(data.jobcatstring);
+
+	    me.showOrHideDetailModal(true);
+	};
+
+	me.showOrHideDetailModal = function(show,anispeed){
+		speed = 600;
+		if(!speed)
+			speed = anispeed;
+		if (show == true){
+			me.element.listArea.hide("slide",{direction: "left"},speed);
+			me.element.moreInfoArea.show("slide",{direction: "right"},speed);
+		}
+		else{
+			me.element.moreInfoArea.hide("slide",{direction: "right"},speed);
+			me.element.listArea.show("slide",{direction: "left"},speed);
+		}
+	};
 	
 };
 
@@ -260,7 +295,13 @@ $(document).ready(function()
 			compelete.setData(_r.data.compelete);
 			var resultArea = new QueryResult($("#page_content"));
 			//resultArea.setData(indTestData);
-
+			$("[data-link='queryClub']").click(function(){
+ 				var club_id = $(this).attr("data-ref");
+				resultArea.getClubData(club_id);
+ 				resultArea.showOrHideDetailModal(false,50);
+				$("[data-ref='queryList']").modal('show');
+				  return false;
+			  });
 			
 			
 		});
@@ -275,12 +316,12 @@ $(document).ready(function()
           	<table id="compeleteTable" class="table table-striped table-bordered">
                   	<thead>
                   		<tr>
-                  			<th>團名</th>
-                  			<th>總人數</th>
-                  			<th>填寫人數</th>
-                  			<th>填寫比率</th>
-                  			<th>開放查詢人數</th>
-                  			<th>開放比率</th>
+                  			<th class="span2">團名</th>
+                  			<th class="span2">團員總數</th>
+                  			<th class="span2">填寫人數</th>
+                  			<th class="span2">填寫比率</th>
+                  			<th class="span2">開放查詢人數</th>
+                  			<th class="span2">開放比率</th>
                   		</tr>
                   	</thead>
                   	<tbody>

@@ -5,7 +5,7 @@ require_once($filePath . "/../mod/page-id.php");
 require_once($filePath . "/../mod/job.php");
 
 $api = new Api($_GET);
-
+$session = new Session();
 $industryID = $api->param("industryID");
 
 
@@ -13,7 +13,13 @@ $industryID = $api->param("industryID");
 // if (!$page->hasOwner($api->getSession()->getUser()))
 // 	$api->returnPermissionDenied();
 
-$careers = career::getCareersByIndustry($industryID);
+//$careers = career::getCareersByIndustry($industryID);
+if ($session->getUser()->isDistrictTeam())
+	$careers = career::getCareersByIndustry($industryID,true);
+else
+	$careers = career::getCareersByIndustry($industryID,false);
+
+
 //echo count($careers);
 $data = array();
 foreach ($careers as $career)

@@ -5,7 +5,7 @@ require_once($filePath . "/../mod/page-id.php");
 require_once($filePath . "/../mod/job.php");
 
 $api = new Api($_GET);
-
+$session = new Session();
 $jobcatID = $api->param("jobcatID");
 
 
@@ -13,7 +13,11 @@ $jobcatID = $api->param("jobcatID");
 // if (!$page->hasOwner($api->getSession()->getUser()))
 // 	$api->returnPermissionDenied();
 
-$careers = career::getCareersByJobcat($jobcatID);
+//$careers = career::getCareersByJobcat($jobcatID);
+if ($session->getUser()->isDistrictTeam())
+	$careers = career::getCareersByJobcat($jobcatID,true);
+else
+	$careers = career::getCareersByJobcat($jobcatID,false);
 
 
 $data = array();

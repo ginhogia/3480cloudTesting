@@ -86,6 +86,10 @@ class Club
     $name_mapping[36]= "台北錫口團";
     $name_mapping[37]= "台北新世紀團";
     $name_mapping[38]= "台北圓滿團";
+    $name_mapping[39]= "台北科大國際團";
+    $name_mapping[40]= "台北上城團";
+    $name_mapping[41]= "台北圓桌團";
+    $name_mapping[42]= "台北保安團";
     return idx($name_mapping, $id, "");
   }
   
@@ -124,6 +128,10 @@ class Club
   	$name_mapping[36]= "台北錫口團";
   	$name_mapping[37]= "台北新世紀團";
   	$name_mapping[38]= "台北圓滿團";
+  	$name_mapping[39]= "台北科大國際團";
+  	$name_mapping[40]= "台北上城團";
+  	$name_mapping[41]= "台北圓桌團";
+  	$name_mapping[42]= "台北保安團";
   	return $name_mapping;
   }
 
@@ -144,7 +152,12 @@ class Club
     $data["member"] = array();
 
     $db = new DB();
-    $sql = "select * from user where club_id={$id} order by name";
+    //$sql = "select * from user where club_id={$id} order by name";
+    $sql = " SELECT id, fbid, name, club_id, title,background,birth_year, birth_month,note,gender,reg_date,exit_date,exit_reason
+    ,   case isnull(userID)  WHEN '0' THEN 1 WHEN '1' THEN 0 END HasJobData
+    FROM `rac-cloud`.user
+    LEFT JOIN `rac-cloud`.user_career ON user.id = user_career.userID
+    where club_id = '{$id}' order by name;";
     $db->query($sql);
     while ($result = $db->fetch_array())
     {

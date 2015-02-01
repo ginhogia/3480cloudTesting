@@ -4,6 +4,7 @@ require_once($filePath . "/../mod/api.php");
 require_once($filePath . "/../mod/page-id.php");
 require_once($filePath . "/../mod/job.php");
 
+$session = new Session();
 $api = new Api($_GET);
 
 $clubID = $api->param("clubID");
@@ -13,7 +14,10 @@ $clubID = $api->param("clubID");
 // if (!$page->hasOwner($api->getSession()->getUser()))
 // 	$api->returnPermissionDenied();
 
-$careers = career::getCareersByClub($clubID);
+if ($session->getUser()->isDistrictTeam())	
+	$careers = career::getCareersByClub($clubID,true);
+else 
+	$careers = career::getCareersByClub($clubID,false);
 
 
 $data = array();
