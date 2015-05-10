@@ -342,6 +342,7 @@ $(document).ready(function()
           <select id="year">
           	<option value="201314">2013-14</option>
           	<option value="201415">2014-15</option>
+          	<option value="201516">2015-16</option>
           </select><br />
           <table class="table table-striped table-bordered">
             <thead>

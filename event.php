@@ -149,7 +149,8 @@ var EventEditor = function(element)
 
     me.data.resources.sort(function(a, b)
     {
-      return new Date(a.last_update) - new Date(b.last_update);
+      //return new Date(a.last_update) - new Date(b.last_update);
+    	return a.topic - b.topic;
     });
     me.element.resource_list.find("tr:not(.template)").remove();
     for (var i = 0; i < me.data.resources.length; ++i)

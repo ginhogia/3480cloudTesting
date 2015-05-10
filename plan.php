@@ -142,30 +142,33 @@ var FileList = function(element)
     }, "json");
   });
 
-  me.element.list.find("input[type='file']").fileupload({
-    dataType: 'json',
-    done: function (e, data) {
-      if (data.result.code == 0)
-      {
-        var id = $(e.target).parents("tr[data-src]").attr("data-src");
-        me.data[id] = {};
-        me.data[id].last_update = new Date().getTime() / 1000;
-        me.data[id].fbid = _r.session.user.fbid;
-        me.refresh();
-      }
-      else
-      {
-        if (data.result.code == -1002)
-        {
-          alert("檔案大小超過限制（5MB）");
-        }
-        else
-        {
-          alert("啊，壞掉了！\n\n錯誤碼：" + data.result.code);
-        }
-      }
-    }
+  me.element.list.find("input[type='file']").click(function(){
+	  alert("提交時間已過，明年請早");
   });
+//   me.element.list.find("input[type='file']").fileupload({
+//     dataType: 'json',
+//     done: function (e, data) {
+//       if (data.result.code == 0)
+//       {
+//         var id = $(e.target).parents("tr[data-src]").attr("data-src");
+//         me.data[id] = {};
+//         me.data[id].last_update = new Date().getTime() / 1000;
+//         me.data[id].fbid = _r.session.user.fbid;
+//         me.refresh();
+//       }
+//       else
+//       {
+//         if (data.result.code == -1002)
+//         {
+//           alert("檔案大小超過限制（5MB）");
+//         }
+//         else
+//         {
+//           alert("啊，壞掉了！\n\n錯誤碼：" + data.result.code);
+//         }
+//       }
+//     }
+//   });
 
 };
 
@@ -197,6 +200,7 @@ $(document).ready(function()
           <select id="year">
           	<option value="201314">2013-14</option>
           	<option value="201415">2014-15</option>
+          	<option value="201516">2015-16</option>
           </select><br />
           <table class="table table-striped table-bordered">
             <thead>
@@ -285,7 +289,7 @@ $(document).ready(function()
                 <td data-ref="date"></td>
                 <td data-ref="user"></td>
                 <td><a href="#" data-link="download"><i class="icon-download"></i> 下載</a></td>
-                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":10}'></a></td>
+                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":10,"racyear":"<?php echo $racyear?>"}'></a></td>
                 <td><a href="#" data-link="remove" data-visible="owner"><i class="icon-remove"></i> 刪除檔案</a></td>
               </tr>
               <tr data-src="11">
@@ -293,7 +297,7 @@ $(document).ready(function()
                 <td data-ref="date"></td>
                 <td data-ref="user"></td>
                 <td><a href="#" data-link="download"><i class="icon-download"></i> 下載</a></td>
-                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":11}'></a></td>
+                <td><a href="#" data-link="upload" data-visible="owner"><i class="icon-upload"></i> 上傳新版本<input type="file" name="file" data-url="./api/uploadFile.php" data-form-data='{"file_id":11,"racyear":"<?php echo $racyear?>"}'></a></td>
                 <td><a href="#" data-link="remove" data-visible="owner"><i class="icon-remove"></i> 刪除檔案</a></td>
               </tr>
             </tbody>
