@@ -142,33 +142,33 @@ var FileList = function(element)
     }, "json");
   });
 
-  me.element.list.find("input[type='file']").click(function(){
-	  alert("提交時間已過，明年請早");
-  });
-//   me.element.list.find("input[type='file']").fileupload({
-//     dataType: 'json',
-//     done: function (e, data) {
-//       if (data.result.code == 0)
-//       {
-//         var id = $(e.target).parents("tr[data-src]").attr("data-src");
-//         me.data[id] = {};
-//         me.data[id].last_update = new Date().getTime() / 1000;
-//         me.data[id].fbid = _r.session.user.fbid;
-//         me.refresh();
-//       }
-//       else
-//       {
-//         if (data.result.code == -1002)
-//         {
-//           alert("檔案大小超過限制（5MB）");
-//         }
-//         else
-//         {
-//           alert("啊，壞掉了！\n\n錯誤碼：" + data.result.code);
-//         }
-//       }
-//     }
+//   me.element.list.find("input[type='file']").click(function(){
+// 	  alert("提交時間已過，明年請早");
 //   });
+  me.element.list.find("input[type='file']").fileupload({
+    dataType: 'json',
+    done: function (e, data) {
+      if (data.result.code == 0)
+      {
+        var id = $(e.target).parents("tr[data-src]").attr("data-src");
+        me.data[id] = {};
+        me.data[id].last_update = new Date().getTime() / 1000;
+        me.data[id].fbid = _r.session.user.fbid;
+        me.refresh();
+      }
+      else
+      {
+        if (data.result.code == -1002)
+        {
+          alert("檔案大小超過限制（5MB）");
+        }
+        else
+        {
+          alert("啊，壞掉了！\n\n錯誤碼：" + data.result.code);
+        }
+      }
+    }
+  });
 
 };
 
