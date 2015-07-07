@@ -362,8 +362,9 @@ $(document).ready(function()
             <input type="text" class="input-xxlarge" data-ref="topic" placeholder="名稱" /><br />
             年度
             <select id="year" data-ref="racyear">
-          	<option value="201314">2013-14</option>
+            <option value="201516">2015-16</option>
           	<option value="201415">2014-15</option>
+          	<option value="201314">2013-14</option>
           	</select> <br />
           	<div class="controls">
                     <label class="radio inline"><input type="radio" name="eventtype" data-ref="eventtype" value="0" />例會</label>

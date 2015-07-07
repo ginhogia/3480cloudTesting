@@ -6,7 +6,7 @@ Class Racyear{
 	}
 	
 	public static function GetThisYear(){
-		return "201415";
+		return "201516";
 	}
 	
 }
